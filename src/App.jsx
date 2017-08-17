@@ -51,7 +51,6 @@ class IssueRow extends React.Component {
   }
 }
 
-
 class IssueTable extends React.Component {
   render() {
     const issueRows = this.props.issues.map(issue => 
