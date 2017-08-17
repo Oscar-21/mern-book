@@ -88,20 +88,6 @@ class IssueAdd extends React.Component {
   }
 }
 
-class Borderwrap extends React.Component {
-  render() {
-    const borderedStyle = {
-      border: '1px solid red',
-      padding: 6,
-    };
-    return (
-      <div style={borderedStyle}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
 class IssueList extends React.Component {
   constructor() {
     super();
@@ -110,6 +96,7 @@ class IssueList extends React.Component {
   }
 
   createIssue(newIssue) {
+    
     const newIssues = this.state.issues.slice();
     newIssue.id = this.state.issues.length + 1;
     newIssues.push(newIssue);
@@ -129,13 +116,9 @@ class IssueList extends React.Component {
 
     return(
       <div>
-        <Borderwrap>
-          <h1 style={{margin: 5}}> Issue Tracker </h1>
-        </Borderwrap>
+        <h1> Issue Tracker </h1>
 
-        <Borderwrap>
           <IssueFilter />
-        </Borderwrap>
         <hr />
 
         <IssueTable issues={this.state.issues}/>
