@@ -46,6 +46,8 @@ class IssueRow extends React.Component {
         issue.completionDate.toDateString() : ''}</td>
 
         <td>{issue.title}</td>
+
+        {console.log('render count')}
       </tr>
     );
   }
