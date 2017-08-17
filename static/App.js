@@ -220,8 +220,13 @@ var IssueList = function (_React$Component6) {
           null,
           React.createElement(
             'h1',
-            null,
+            { style: { margin: 5 } },
             ' Issue Tracker '
+          ),
+          React.createElement(
+            'h2',
+            { style: { margin: 5 } },
+            ' test '
           )
         ),
         React.createElement(

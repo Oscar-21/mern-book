@@ -9,6 +9,27 @@ class IssueFilter extends React.Component {
 }
 
 
+const issues = [
+  {
+    id: 1,
+    status: 'Open',
+    owner: 'Ravan',
+    created: new Date('2016-08-15'),
+    effort: 5,
+    completionDate: undefined,
+    title: 'Error in Console when clicking add',
+  },
+  {
+    id: 2,
+    status: 'Assigned',
+    owner: 'Eddie',
+    created: new Date('2016-08-16'),
+    effort: 14,
+    completionDate: new Date('2016-08-30'),
+    title: 'Missing bottom border on panel',
+  },
+];
+
 class IssueRow extends React.Component {
   render() {
     const borderedStyle = {
@@ -34,10 +55,12 @@ IssueRow.defaultProps = {
 
 class IssueTable extends React.Component {
   render() {
+    const issueRows = 
     const borderedStyle = {
       border: '1px solid silver',
       padding: 6,
     };
+
     return (
       <table style={{borderCollapse: 'collapse'}}>
         <thead>
@@ -92,7 +115,8 @@ class IssueList extends React.Component {
     return(
       <div>
         <Borderwrap>
-          <h1> Issue Tracker </h1>
+          <h1 style={{margin: 5}}> Issue Tracker </h1>
+          <h2 style={{margin: 5}}> test </h2>
         </Borderwrap>
 
         <Borderwrap>
@@ -100,7 +124,7 @@ class IssueList extends React.Component {
         </Borderwrap>
         <hr />
 
-        <IssueTable />
+        <IssueTable issues={issues}/>
         <hr />
 
         <IssueAdd />
