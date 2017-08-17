@@ -64,7 +64,7 @@ var IssueRow = function (_React$Component2) {
         React.createElement(
           'td',
           { style: borderedStyle },
-          this.props.issue_title
+          this.props.children
         )
       );
     }
@@ -74,12 +74,11 @@ var IssueRow = function (_React$Component2) {
 }(React.Component);
 
 IssueRow.propTypes = {
-  issue_id: React.PropTypes.number.isRequired,
-  issue_title: React.PropTypes.string
+  issue_id: React.PropTypes.number.isRequired
 };
 
 IssueRow.defaultProps = {
-  issue_title: '-- no title --'
+  children: '-- no title --'
 };
 
 var IssueTable = function (_React$Component3) {
@@ -122,17 +121,23 @@ var IssueTable = function (_React$Component3) {
         React.createElement(
           'tbody',
           null,
-          React.createElement(IssueRow, {
-            issue_id: 3,
-            issue_title: 'some error ticket'
-          }),
-          React.createElement(IssueRow, {
-            issue_id: 2,
-            issue_title: 'Missing bottom border on panel'
-          }),
-          React.createElement(IssueRow, {
-            issue_id: 2
-          })
+          React.createElement(
+            IssueRow,
+            { issue_id: 3 },
+            'some error ticket'
+          ),
+          React.createElement(
+            IssueRow,
+            { issue_id: 2 },
+            'Missing bottom ',
+            React.createElement(
+              'b',
+              null,
+              'border'
+            ),
+            ' on panel'
+          ),
+          React.createElement(IssueRow, { issue_id: 2 })
         )
       );
     }

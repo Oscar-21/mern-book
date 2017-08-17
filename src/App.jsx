@@ -18,7 +18,7 @@ class IssueRow extends React.Component {
     return (
       <tr>
         <td style={borderedStyle}>{this.props.issue_id}</td>
-        <td style={borderedStyle}>{this.props.issue_title}</td>
+        <td style={borderedStyle}>{this.props.children}</td>
       </tr>
     );
   }
@@ -26,11 +26,10 @@ class IssueRow extends React.Component {
 
 IssueRow.propTypes = {
   issue_id: React.PropTypes.number.isRequired,
-  issue_title: React.PropTypes.string,
 };
 
 IssueRow.defaultProps = {
-  issue_title: '-- no title --',
+  children: '-- no title --',
 };
 
 class IssueTable extends React.Component {
@@ -49,19 +48,16 @@ class IssueTable extends React.Component {
         </thead>
         <tbody>
         
-          <IssueRow
-            issue_id={3}
-            issue_title="some error ticket"
-          />
+          <IssueRow issue_id={3}>
+            some error ticket
+          </IssueRow>
 
-          <IssueRow
-            issue_id={2}
-            issue_title="Missing bottom border on panel"
-          />
+          <IssueRow issue_id={2}>
+            Missing bottom <b>border</b> on panel
+          </IssueRow>
 
-          <IssueRow
-            issue_id={2}
-          />
+          <IssueRow issue_id={2}>
+          </IssueRow>
 
         </tbody>
       </table>
