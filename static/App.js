@@ -126,9 +126,9 @@ var IssueTable = function (_React$Component3) {
   _createClass(IssueTable, [{
     key: 'render',
     value: function render() {
-      var issueRows = this.props.issues.map(function (issue) {
-        return React.createElement(IssueRow, { key: issue.id, issue: issue });
-      });
+      //const issueRows = this.props.issues.map(issue => 
+      //<IssueRow key={issue.id} issue={issue} />
+      //);
 
       return React.createElement(
         'table',
@@ -179,7 +179,9 @@ var IssueTable = function (_React$Component3) {
         React.createElement(
           'tbody',
           null,
-          issueRows
+          this.props.issues.map(function (issue) {
+            return React.createElement(IssueRow, { key: issue.id, issue: issue });
+          })
         )
       );
     }
