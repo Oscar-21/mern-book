@@ -17,7 +17,7 @@ const issues = [
     created: new Date('2016-08-15'),
     effort: 5,
     completionDate: undefined,
-    title: 'Error in Console when clicking add',
+    title: 'error in console',
   },
   {
     id: 2,
@@ -32,56 +32,48 @@ const issues = [
 
 class IssueRow extends React.Component {
   render() {
-    const borderedStyle = {
-      border: '1px solid silver',
-      padding: 4,
-    };
+    const issue = this.props.issue;
+
     return (
       <tr>
-        <td style={borderedStyle}>{this.props.issue_id}</td>
-        <td style={borderedStyle}>{this.props.children}</td>
+        <td>{issue.id}</td>
+        <td>{issue.status}</td>
+        <td>{issue.owner}</td>
+        <td>{issue.created.toDateString()}</td>
+        <td>{issue.effort}</td>
+
+        <td>{issue.completionDate ?
+        issue.completionDate.toDateString() : ''}</td>
+
+        <td>{issue.title}</td>
       </tr>
     );
   }
 }
 
-IssueRow.propTypes = {
-  issue_id: React.PropTypes.number.isRequired,
-};
-
-IssueRow.defaultProps = {
-  children: '-- no title --',
-};
 
 class IssueTable extends React.Component {
   render() {
-    const issueRows = 
-    const borderedStyle = {
-      border: '1px solid silver',
-      padding: 6,
-    };
+    const issueRows = this.props.issues.map(issue => 
+      <IssueRow key={issue.id} issue={issue} />
+    );
 
     return (
-      <table style={{borderCollapse: 'collapse'}}>
+      <table className="bordered-table">
         <thead>
           <tr>
-            <th style={borderedStyle}> Id </th>
-            <th style={borderedStyle}> Title </th>
+            <th> Id </th>
+            <th> Status </th>
+            <th> Owner </th>
+            <th> Created </th>
+            <th> Effort </th>
+            <th> Completion Date </th>
+            <th> Title </th>
           </tr>
         </thead>
+
         <tbody>
-        
-          <IssueRow issue_id={3}>
-            some error ticket
-          </IssueRow>
-
-          <IssueRow issue_id={2}>
-            Missing bottom <b>border</b> on panel
-          </IssueRow>
-
-          <IssueRow issue_id={2}>
-          </IssueRow>
-
+          {issueRows}
         </tbody>
       </table>
     );
@@ -90,8 +82,11 @@ class IssueTable extends React.Component {
 
 class IssueAdd extends React.Component {
   render() {
+
     return (
-      <div> This is a placeholder for {'<'}IssueAdd{'>'} </div>
+      <div> 
+        This is a placeholder for {'<'}IssueAdd{'>'} 
+      </div>
     );
   }
 }
@@ -111,7 +106,9 @@ class Borderwrap extends React.Component {
 }
 
 class IssueList extends React.Component {
+
   render() { 
+
     return(
       <div>
         <Borderwrap>
@@ -128,6 +125,7 @@ class IssueList extends React.Component {
         <hr />
 
         <IssueAdd />
+
       </div>
     ); 
   }
