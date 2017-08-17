@@ -68,7 +68,6 @@ var IssueRow = function (_React$Component2) {
     key: 'render',
     value: function render() {
       var issue = this.props.issue;
-
       return React.createElement(
         'tr',
         null,
@@ -106,7 +105,8 @@ var IssueRow = function (_React$Component2) {
           'td',
           null,
           issue.title
-        )
+        ),
+        console.log('render count')
       );
     }
   }]);
@@ -193,20 +193,44 @@ var IssueAdd = function (_React$Component4) {
   function IssueAdd() {
     _classCallCheck(this, IssueAdd);
 
-    return _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).apply(this, arguments));
+    var _this4 = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
+
+    _this4.handleSubmit = _this4.handleSubmit.bind(_this4);
+    return _this4;
   }
 
   _createClass(IssueAdd, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var form = document.forms.issueAdd;
+      this.props.createIssue({
+        owner: form.owner.value,
+        title: form.title.value,
+        status: 'News',
+        created: new Date()
+      });
+      // clear the form for the next input
+      form.owner.value = "";
+      form.title.value = "";
+    }
+  }, {
     key: 'render',
     value: function render() {
-
       return React.createElement(
         'div',
         null,
-        'This is a placeholder for ',
-        '<',
-        'IssueAdd',
-        '>'
+        React.createElement(
+          'form',
+          { name: 'issueAdd', onSubmit: this.handleSubmit },
+          React.createElement('input', { type: 'text', name: 'owner', placeholder: 'Owner' }),
+          React.createElement('input', { type: 'text', name: 'title', placeholder: 'Title' }),
+          React.createElement(
+            'button',
+            null,
+            'Add'
+          )
+        )
       );
     }
   }]);
@@ -214,47 +238,34 @@ var IssueAdd = function (_React$Component4) {
   return IssueAdd;
 }(React.Component);
 
-var Borderwrap = function (_React$Component5) {
-  _inherits(Borderwrap, _React$Component5);
-
-  function Borderwrap() {
-    _classCallCheck(this, Borderwrap);
-
-    return _possibleConstructorReturn(this, (Borderwrap.__proto__ || Object.getPrototypeOf(Borderwrap)).apply(this, arguments));
-  }
-
-  _createClass(Borderwrap, [{
-    key: 'render',
-    value: function render() {
-      var borderedStyle = {
-        border: '1px solid red',
-        padding: 6
-      };
-      return React.createElement(
-        'div',
-        { style: borderedStyle },
-        this.props.children
-      );
-    }
-  }]);
-
-  return Borderwrap;
-}(React.Component);
-
-var IssueList = function (_React$Component6) {
-  _inherits(IssueList, _React$Component6);
+var IssueList = function (_React$Component5) {
+  _inherits(IssueList, _React$Component5);
 
   function IssueList() {
     _classCallCheck(this, IssueList);
 
-    var _this6 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
+    var _this5 = _possibleConstructorReturn(this, (IssueList.__proto__ || Object.getPrototypeOf(IssueList)).call(this));
 
-    _this6.state = { issues: issues };
-    setTimeout(_this6.createTestIssue.bind(_this6), 2000);
-    return _this6;
+    _this5.state = { issues: [] };
+    _this5.createIssue = _this5.createIssue.bind(_this5);
+    return _this5;
   }
 
   _createClass(IssueList, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: 'loadData',
+    value: function loadData() {
+      var _this6 = this;
+
+      setTimeout(function () {
+        _this6.setState({ issues: issues });
+      }, 500);
+    }
+  }, {
     key: 'createIssue',
     value: function createIssue(newIssue) {
       var newIssues = this.state.issues.slice();
@@ -263,16 +274,6 @@ var IssueList = function (_React$Component6) {
       this.setState({ issues: newIssues });
     }
   }, {
-    key: 'createTestIssue',
-    value: function createTestIssue() {
-      this.createIssue({
-        status: 'New',
-        owner: 'Pieta',
-        created: new Date(),
-        title: 'Completion date should be optional'
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
 
@@ -280,23 +281,15 @@ var IssueList = function (_React$Component6) {
         'div',
         null,
         React.createElement(
-          Borderwrap,
+          'h1',
           null,
-          React.createElement(
-            'h1',
-            { style: { margin: 5 } },
-            ' Issue Tracker '
-          )
+          ' Issue Tracker '
         ),
-        React.createElement(
-          Borderwrap,
-          null,
-          React.createElement(IssueFilter, null)
-        ),
+        React.createElement(IssueFilter, null),
         React.createElement('hr', null),
         React.createElement(IssueTable, { issues: this.state.issues }),
         React.createElement('hr', null),
-        React.createElement(IssueAdd, null)
+        React.createElement(IssueAdd, { createIssue: this.createIssue })
       );
     }
   }]);
