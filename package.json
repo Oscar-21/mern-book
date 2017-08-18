@@ -4,14 +4,14 @@
   "description": "going through Subramanian's pro mern stack book ",
   "main": "index.js",
   "scripts": {
-    "start": "node mern.js",
+    "start": "nodemon -w mern.js mern.js",
     "compile": "babel src --presets react,es2015 --out-dir static",
     "watch": "babel src --presets react,es2015 --out-dir static --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Oscar-21/mern-book.git"
+    "url": "https://github.com/Oscar-21/mern-book.git"
   },
   "author": "Austin Conder",
   "license": "MIT",
@@ -20,11 +20,13 @@
   },
   "homepage": "https://github.com/Oscar-21/mern-book#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.11.1"
+    "babel-preset-react": "^6.11.1",
+    "nodemon": "^1.10.0"
   }
 }
