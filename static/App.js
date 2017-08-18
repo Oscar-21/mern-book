@@ -260,10 +260,24 @@ var IssueList = function (_React$Component5) {
   }, {
     key: 'createIssue',
     value: function createIssue(newIssue) {
-      var newIssues = this.state.issues.slice();
-      newIssue.id = this.state.issues.length + 1;
-      newIssues.push(newIssue);
-      this.setState({ issues: newIssues });
+      var _this7 = this;
+
+      fetch('/api/issues', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newIssue)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (updatedIssue) {
+        updatedIssue.created = new Date(updatedIssue.created);
+
+        if (updatedIssue.completionDate) updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+
+        var newIssues = _this7.state.issues.concat(updatedIssue);
+        _this7.setState({ issues: newIssues });
+      }).catch(function (err) {
+        alert("error in sending data to server: " + error.message);
+      });
     }
   }, {
     key: 'render',
