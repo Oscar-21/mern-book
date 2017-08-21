@@ -1,9 +1,12 @@
 'use strict'
 
 const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
+let db;
 
 const app = express();
+
 app.use(express.static('static'));
 app.use(bodyParser.json());
 
@@ -77,6 +80,12 @@ app.post('/api/issues', (req, res) => {
   res.json(newIssue);
 });
 
-app.listen(3000, () => {
-  console.log('App started on port 3000');
+MongoClient.connect('mongodb://localhost/issuetracker'
+).then(connection => {
+  db = connection;
+  app.listen(3000, () => {
+    console.log('App started on port 3000');
+  });
+}).catch(error => {
+  console.log('error: ', error);
 });
