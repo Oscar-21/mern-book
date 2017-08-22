@@ -9,10 +9,9 @@ const app = express();
 
 app.use(express.static('static'));
 app.use(bodyParser.json());
-
-
+db.collection()
 app.get('/api/issues', (req, res) => {
-  db.collection('issues').find().toArray().then(issues => {
+  db.collection('issues').find().toArray().then( issues => {
     const metadata = {total_count: issues.length};
     res.json({ _metadata: metadata, records: issues });
   }).catch(err => {
