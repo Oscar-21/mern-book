@@ -4,9 +4,9 @@
   "description": "going through Subramanian's pro mern stack book ",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -w mern.js mern.js",
-    "compile": "babel src --presets react,es2015 --out-dir static",
-    "watch": "babel src --presets react,es2015 --out-dir static --watch",
+    "start": "nodemon -w server server/mern.js",
+    "compile": "webpack",
+    "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,11 +27,15 @@
   "devDependencies": {
     "babel-cli": "^6.11.4",
     "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.11.1",
     "nodemon": "^1.10.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.0"
+    "webpack-dev-server": "^1.15.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "keywords": [
     "react",
