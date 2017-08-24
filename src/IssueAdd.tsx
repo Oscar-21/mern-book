@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import * as React from "react";
 
-class IssueAdd extends Component {
+export class IssueAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,4 +31,3 @@ class IssueAdd extends Component {
     );
   }
 }
-export default IssueAdd;

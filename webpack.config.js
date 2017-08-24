@@ -2,25 +2,26 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './src/App.jsx',
-    vendor: ['react', 'react-dom', 'whatwg-fetch'],
+    app: './src/App.tsx'
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
-  ],
+  devtool: "source-map",
+
+ /* resolve: {
+      // Add '.ts' and '.tsx' as resolvable extensions.
+      extensions: [".ts", ".tsx", ".js", ".json", "jsx"]
+  },*/
+
   output: {
     path: './static',
     filename: 'app.bundle.js'
   },
   module: {
     loaders: [
-      {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react','es2015']
-        }
-      },
+      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
-  }
+  },
 };

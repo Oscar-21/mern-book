@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
-import IssueAdd from './IssueAdd.jsx';
-import IssueFilter from './IssueFilter.jsx';
+import * as React from 'react';
+import "whatwg-fetch";
+import { IssueAdd } from './IssueAdd';
+import { IssueFilter } from './IssueFilter';
 
 const IssueRow = (props) => (
   <tr>
@@ -44,7 +44,7 @@ function IssueTable(props) {
   );
 }
 
-class IssueList extends Component {
+export class IssueList extends React.Component {
   constructor() {
     super();
     this.state = { issues: [], };
@@ -109,4 +109,3 @@ class IssueList extends Component {
     ); 
   }
 }
-export default IssueList;

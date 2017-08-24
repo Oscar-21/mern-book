@@ -1,0 +1,73 @@
+
+> tproj@1.0.0 compile /home/ubuntu/dev/mern-book
+> webpack --display-error-details
+
+
+[at-loader] Using typescript@2.4.2 from typescript and "tsconfig.json" from /home/ubuntu/dev/mern-book/tsconfig.json.
+
+
+[at-loader] Checking started in a separate process...
+Hash: a64a30e9964aa91cbb79
+Version: webpack 1.15.0
+Time: 3737ms
+            Asset    Size  Chunks             Chunk Names
+    app.bundle.js  767 kB       0  [emitted]  app
+app.bundle.js.map  892 kB       0  [emitted]  app
+    + 184 hidden modules
+
+ERROR in ./src/App.tsx
+Module not found: Error: Cannot resolve 'file' or 'directory' ./IssueList in /home/ubuntu/dev/mern-book/src
+resolve file
+  /home/ubuntu/dev/mern-book/src/IssueList doesn't exist
+  /home/ubuntu/dev/mern-book/src/IssueList.webpack.js doesn't exist
+  /home/ubuntu/dev/mern-book/src/IssueList.web.js doesn't exist
+  /home/ubuntu/dev/mern-book/src/IssueList.js doesn't exist
+  /home/ubuntu/dev/mern-book/src/IssueList.json doesn't exist
+resolve directory
+  /home/ubuntu/dev/mern-book/src/IssueList doesn't exist (directory default file)
+  /home/ubuntu/dev/mern-book/src/IssueList/package.json doesn't exist (directory description file)
+[/home/ubuntu/dev/mern-book/src/IssueList]
+[/home/ubuntu/dev/mern-book/src/IssueList.webpack.js]
+[/home/ubuntu/dev/mern-book/src/IssueList.web.js]
+[/home/ubuntu/dev/mern-book/src/IssueList.js]
+[/home/ubuntu/dev/mern-book/src/IssueList.json]
+ @ ./src/App.tsx 5:18-40
+
+ERROR in [at-loader] ./src/IssueAdd.tsx:9:16 
+    TS7006: Parameter 'e' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueAdd.tsx:11:31 
+    TS2339: Property 'issueAdd' does not exist on type 'HTMLCollectionOf<HTMLFormElement>'.
+
+ERROR in [at-loader] ./src/IssueAdd.tsx:12:16 
+    TS2339: Property 'createIssue' does not exist on type 'Readonly<{ children?: ReactNode; }> & Readonly<{}>'.
+
+ERROR in [at-loader] ./src/IssueList.tsx:6:19 
+    TS7006: Parameter 'props' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueList.tsx:23:21 
+    TS7006: Parameter 'props' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueList.tsx:24:38 
+    TS7006: Parameter 'issue' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueList.tsx:63:32 
+    TS7006: Parameter 'issue' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueList.tsx:76:7 
+    TS2554: Expected 0-1 arguments, but got 2.
+
+ERROR in [at-loader] ./src/IssueList.tsx:80:15 
+    TS7006: Parameter 'newIssue' implicitly has an 'any' type.
+
+ERROR in [at-loader] ./src/IssueList.tsx:93:36 
+    TS2339: Property 'issues' does not exist on type 'Readonly<{}>'.
+
+ERROR in [at-loader] ./src/IssueList.tsx:96:51 
+    TS2552: Cannot find name 'error'. Did you mean 'Error'?
+
+ERROR in [at-loader] ./src/IssueList.tsx:105:40 
+    TS2339: Property 'issues' does not exist on type 'Readonly<{}>'.
+
+ERROR in [at-loader] ./src/IssueList.tsx:107:19 
+    TS2339: Property 'createIssue' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<IssueAdd> & Readonly<{ children?: ReactNode; }> & ...'.
