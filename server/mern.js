@@ -1,26 +1,35 @@
 'use strict'
 
-// Import Dependencies
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
 const Issue = require('./issue.js');
 
-let db;
-
 const app = express();
-
 app.use(express.static('static'));
-
 app.use(bodyParser.json());
 
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+
+  const config = require('../webpack.config');
+  config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+  const bundler = webpack(config);
+  app.use(webpackDevMiddleware(bundler, { noInfo: true }));
+  app.use(webpackHotMiddleware(bundler, { log: console.log }));
+}
+
 app.get('/api/issues', (req, res) => {
-  db.collection('issues').find().toArray().then( issues => {
-    const metadata = {total_count: issues.length};
-    res.json({ _metadata: metadata, records: issues });
-  }).catch(err => {
-    console.log(err);
-    res.status(500).json({ message: `Internal Server Error: ${err}` });
+  db.collection('issues').find().toArray().then(issues => {
+    const metadata = { total_count: issues.length };
+    res.json({ _metadata: metadata, records: issues })
+  }).catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
 });
 
@@ -46,13 +55,12 @@ app.post('/api/issues', (req, res) => {
   });
 });
 
-MongoClient.connect('mongodb://localhost/issuetracker', {
-  db:{bufferMaxEntries:0},
-}).then(connection => {
+let db;
+MongoClient.connect('mongodb://localhost/issuetracker').then(connection => {
   db = connection;
   app.listen(3000, () => {
     console.log('App started on port 3000');
   });
 }).catch(error => {
-  console.log('error: ', error);
+  console.log('ERROR:', error);
 });
