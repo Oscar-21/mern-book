@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 class IssueFilter extends Component {
-  render() {
+    render() {
+    
     return (
-      <div> This is a placeholder for {'<'}IssueFilter{'>'}!!!! </div>
+      <div> 
+        This is a placeholder for {'<'}IssueFilter{'>'}! 
+      </div>
     );
   }
 }

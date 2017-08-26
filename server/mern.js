@@ -1,9 +1,11 @@
-'use strict'
+import express from 'express';
+import bodyParser from 'body-parser';
+import 'babel-polyfill';
+import { MongoClient } from 'mongodb';
+import Issue from './issue.js';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
-const Issue = require('./issue.js');
+import SourceMapSupport from 'source-map-support';
+SourceMapSupport.install();
 
 const app = express();
 app.use(express.static('static'));
@@ -45,7 +47,7 @@ app.post('/api/issues', (req, res) => {
     return;
   }
 
-  db.collection('issues').insertOne(newIssue).then(result =>
+  db.collection('issues').insertOne(Issue.cleanupIssue(newIssue)).then(result =>
     db.collection('issues').find({ _id: result.insertedId }).limit(1).next()
   ).then(newIssue => {
     res.json(newIssue);
