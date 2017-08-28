@@ -26,14 +26,14 @@ function cleanupIssue(issue) {
 
 function validateIssue(issue) {
   const errors = [];
-  Object.keys(issueFieldType[field]).forEach(field => {
+  Object.keys(issueFieldType).forEach(field => {
     if (issueFieldType[field] === 'required' && !issue[field]) {
-      erros.push(`Missing mandatory field: ${field}`);
+      errors.push(`Missing mandatory field: ${field}`);
     }
   });
 
   if (!validIssueStatus[issue.status]) {
-    erros.push(`Issue ${status} is not a valid status`);
+    errors.push(`Issue ${status} is not a valid status`);
   }
 
   return (errors.length ? errors.join('; ') : null);

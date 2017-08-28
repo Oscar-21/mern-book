@@ -12,6 +12,7 @@
     "watch": "webpack --watch",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "dev-all-hook": "npm run watch & npm run start-hook",
+    "lint": "eslint --ext js,jsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

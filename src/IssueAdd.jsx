@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-class IssueAdd extends Component {
+export default class IssueAdd extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -8,7 +8,7 @@ class IssueAdd extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    var form = document.forms.issueAdd;
+    const form = document.forms.issueAdd;
     this.props.createIssue({
       owner: form.owner.value,
       title: form.title.value,
@@ -16,12 +16,13 @@ class IssueAdd extends Component {
       created: new Date(),
     });
     // clear the form for the next input
-    form.owner.value = "";
-    form.title.value = "";
+    form.owner.value = '';
+    form.title.value = '';
   }
+
   render() {
     return (
-      <div> 
+      <div>
         <form name="issueAdd" onSubmit={this.handleSubmit}>
           <input type="text" name="owner" placeholder="Owner" />
           <input type="text" name="title" placeholder="Title" />
@@ -31,4 +32,8 @@ class IssueAdd extends Component {
     );
   }
 }
-export default IssueAdd;
+
+IssueAdd.propTypes = {
+  createIssue: React.PropTypes.func.isRequired,
+};
+

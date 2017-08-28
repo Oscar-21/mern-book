@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFilter.jsx';
 
@@ -10,20 +11,17 @@ const IssueRow = (props) => (
     <td>{props.issue.owner}</td>
     <td>{props.issue.created.toDateString()}</td>
     <td>{props.issue.effort}</td>
-
-    <td>{props.issue.completionDate ?
-    props.issue.completionDate.toDateString() : ''}</td>
-
+    <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
     <td>{props.issue.title}</td>
-
-    {console.log('render count')}
   </tr>
 );
 
+IssueRow.propTypes = {
+  issue: React.PropTypes.object.isRequired,
+};
+
 function IssueTable(props) {
-  const issueRows = props.issues.map(issue => 
-    <IssueRow key={issue._id} issue={issue} />
-  );
+  const issueRows = props.issues.map(issue => <IssueRow key={issue._id} issue={issue} />);
   return (
     <table className="bordered-table">
       <thead>
@@ -44,10 +42,14 @@ function IssueTable(props) {
   );
 }
 
+IssueTable.propTypes = {
+  issues: React.PropTypes.array.isRequired,
+};
+
 class IssueList extends Component {
   constructor() {
     super();
-    this.state = { issues: [], };
+    this.state = { issues: [] };
     this.createIssue = this.createIssue.bind(this);
   }
 
@@ -59,54 +61,62 @@ class IssueList extends Component {
     fetch('/api/issues').then(response => {
       if (response.ok) {
         response.json().then(data => {
-          console.log("Total count of records: ", data._metadata.total_count);
           data.records.forEach(issue => {
             issue.created = new Date(issue.created);
-            if (issue.completionDate)
+            if (issue.completionDate) {
               issue.completionDate = new Date(issue.completionDate);
+            }
           });
           this.setState({ issues: data.records });
         });
       } else {
         response.json().then(error => {
-          alert("Failed to fetch issues: " + error.message)
+          alert(`Failed to fetch issues: ${error.message}`);
         });
       }
-    }).catch(err => {
-      alert("Error in fetching data from server: ", err );
+    })
+    .catch(err => {
+      alert(`Error in fetching data from server: ${err}`);
     });
   }
 
   createIssue(newIssue) {
     fetch('/api/issues', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newIssue),
-    }).then( response =>
-      response.json()
-    ).then(updatedIssue => {
-      updatedIssue.created = new Date(updatedIssue.created);
-
-      if (updatedIssue.completionDate)
-        updatedIssue.completionDate = new Date(updatedIssue.completionDate);
-
-      const newIssues = this.state.issues.concat(updatedIssue);
-      this.setState({ issues: newIssues });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newIssue),
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(updatedIssue => {
+          updatedIssue.created = new Date(updatedIssue.created);
+          if (updatedIssue.completionDate) {
+            updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+          }
+          const newIssues = this.state.issues.concat(updatedIssue);
+          this.setState({ issues: newIssues });
+        });
+      } else {
+        response.json().then(error => {
+          alert(`Failed to add issue: ${error.message}`);
+        });
+      }
     }).catch(err => {
-      alert("error in sending data to server: " + error.message);
+      alert(`Error in sending data to server: ${err.message}`);
     });
   }
-  render() { 
-    return(
+
+  render() {
+    return (
       <div>
         <h1> Issue Tracker </h1>
-          <IssueFilter />
+        <IssueFilter />
         <hr />
         <IssueTable issues={this.state.issues} />
         <hr />
         <IssueAdd createIssue={this.createIssue} />
       </div>
-    ); 
+    );
   }
 }
 export default IssueList;
+
