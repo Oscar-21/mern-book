@@ -19,7 +19,7 @@ const issueFieldType = {
 function cleanupIssue(issue) {
   const cleanedUpIssue = {};
   Object.keys(issue).forEach(field => {
-    if (issueFieldType[field]) cleanupIssue[field] = issue[field];
+    if (issueFieldType[field]) cleanedUpIssue[field] = issue[field];
   });
   return cleanedUpIssue;
 }
@@ -33,12 +33,13 @@ function validateIssue(issue) {
   });
 
   if (!validIssueStatus[issue.status]) {
-    errors.push(`Issue ${status} is not a valid status`);
+    errors.push(`${issue.status} is not a valid status.`);
   }
 
   return (errors.length ? errors.join('; ') : null);
 }
-export default { 
+
+export default {
   validateIssue,
   cleanupIssue,
 };

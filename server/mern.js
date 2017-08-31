@@ -27,6 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(webpackHotMiddleware(bundler, { log: console.log }));
 }
 
+
 app.get('/api/issues', (req, res) => {
   db.collection('issues').find().toArray()
   .then(issues => {
