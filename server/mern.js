@@ -7,18 +7,18 @@ import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import Issue from './issue.js';
 
+const webpack = process.env.NODE_ENV !== 'production' ? require('webpack') : null;
+const webpackDevMiddleware = webpack !== null ? require('webpack-dev-middleware') : null;
+const webpackHotMiddleware = webpack !== null ? require('webpack-hot-middleware') : null;
+const config = webpack !== null ? require('../webpack.config') : null;
+
 const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.json());
 
 let db;
 
-if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack');
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-
-  const config = require('../webpack.config');
+if (webpack !== null) {
   config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
