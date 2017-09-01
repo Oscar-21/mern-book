@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class IssueAdd extends Component {
+export default class IssueAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,8 +16,7 @@ export default class IssueAdd extends Component {
       created: new Date(),
     });
     // clear the form for the next input
-    form.owner.value = '';
-    form.title.value = '';
+    form.owner.value = ''; form.title.value = '';
   }
 
   render() {

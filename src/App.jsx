@@ -10,7 +10,7 @@ const contentNode = document.getElementById('contents');
 const NoMatch = () => <p>Page Not Found</p>;
 
 const RoutedApp = () => (
-  <Router history={hashHistory}>
+  <Router history={hashHistory} >
     <Redirect from="/" to="/issues" />
     <Route path="/issues" component={IssueList} />
     <Route path="/issues/:id" component={IssueEdit} />
@@ -23,3 +23,4 @@ ReactDOM.render(<RoutedApp />, contentNode);
 if (module.hot) {
   module.hot.accept();
 }
+

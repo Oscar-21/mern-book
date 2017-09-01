@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 
-class IssueEdit extends Component {
+export default class IssueEdit extends React.Component { // eslint-disable-line
   render() {
     return (
-      <div> 
-        <p>Placeholder for editing issue {this.props.params.id}.</p>
-        <Link to="/issues"> Back to issue list </Link>
+      <div>
+        <p>This is a placeholder for editing issue {this.props.params.id}.</p>
+        <Link to="/issues">Back to issue list</Link>
       </div>
     );
   }
 }
-export default IssueEdit;
 
 IssueEdit.propTypes = {
   params: React.PropTypes.object.isRequired,
 };
+
