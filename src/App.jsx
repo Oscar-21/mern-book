@@ -15,7 +15,7 @@ const RoutedApp = () => (
     <Route path="/issues" component={IssueList} />
     <Route path="/issues/:id" component={IssueEdit} />
     <Route path="*" component={NoMatch} />
-  <Router />
+  </Router>
 );
 
 ReactDOM.render(<RoutedApp />, contentNode);

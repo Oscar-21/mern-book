@@ -6,7 +6,7 @@ class IssueEdit extends Component {
     return (
       <div> 
         <p>Placeholder for editing issue {this.props.params.id}.</p>
-        <Link to="/issues"> Back to issue list <Link />
+        <Link to="/issues"> Back to issue list </Link>
       </div>
     );
   }
