@@ -31,6 +31,7 @@ if (webpack !== null) {
 app.get('/api/issues', (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
+
   db.collection('issues').find(filter).toArray()
   .then(issues => {
     const metadata = { total_count: issues.length };
