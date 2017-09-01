@@ -82,9 +82,9 @@ class IssueList extends Component {
 
   createIssue(newIssue) {
     fetch('/api/issues', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newIssue),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newIssue),
     }).then(response => {
       if (response.ok) {
         response.json().then(updatedIssue => {
