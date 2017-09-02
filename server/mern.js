@@ -1,6 +1,7 @@
 import SourceMapSupport from 'source-map-support';
 SourceMapSupport.install();
 import 'babel-polyfill';
+import path from 'path';
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -23,10 +24,15 @@ if (webpack !== null) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
   const bundler = webpack(config);
-  app.use(webpackDevMiddleware(bundler, { noInfo: true }));
-  app.use(webpackHotMiddleware(bundler, { log: console.log }));
+  app.use(webpackDevMiddleware(bundler, { 
+    noInfo: true,
+  //  historyApiFallback: true
+  }));
+  app.use(webpackHotMiddleware(bundler, { 
+    log: console.log, 
+//    historyApiFallback: true
+  }));
 }
-
 
 app.get('/api/issues', (req, res) => {
   const filter = {};
@@ -66,6 +72,11 @@ app.post('/api/issues', (req, res) => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
+});
+
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('static/index.html'));
 });
 
 MongoClient.connect('mongodb://localhost/issuetracker').then(connection => {
