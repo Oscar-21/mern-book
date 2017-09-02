@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class IssueAdd extends React.Component {
+export default class IssueAdd extends React.PureComponent {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,6 +20,7 @@ export default class IssueAdd extends React.Component {
   }
 
   render() {
+    console.log('add');
     return (
       <div>
         <form name="issueAdd" onSubmit={this.handleSubmit}>
