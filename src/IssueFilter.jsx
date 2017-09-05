@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class IssueFilter extends Component {
+class IssueFilter extends PureComponent {
 
 constructor(props) {
     super(props);
@@ -68,6 +68,7 @@ constructor(props) {
   }
 
   render() {
+    console.log('filter');
     return (
       <div>
         Status:

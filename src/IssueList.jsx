@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFilter.jsx';
 
-export default class IssueList extends React.Component {
+export default class IssueList extends React.PureComponent {
   constructor() {
     super();
     this.state = { issues: [] };
@@ -21,7 +21,7 @@ export default class IssueList extends React.Component {
   componentDidUpdate(prevProps) {
     const oldQuery = prevProps.location.query;
     const newQuery = this.props.location.query;
-
+    console.log('newprops');
     if (oldQuery.status === newQuery.status 
         && oldQuery.effort_gte === newQuery.effort_gte
         && oldQuery.effort_lte === newQuery.effort_lte) {
