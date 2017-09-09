@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 import NumInput from './NumInput.jsx';
 
-class IssueEdit extends Component {
+export default class IssueEdit extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -128,7 +128,6 @@ class IssueEdit extends Component {
     );
   }
 }
-export default IssueEdit;
 
 IssueEdit.propTypes = {
   params: React.PropTypes.object.isRequired,

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'whatwg-fetch';
 import { Link } from 'react-router';
 
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFilter.jsx';
 
-class IssueList extends Component {
+export default class IssueList extends React.Component {
   constructor() {
     super();
     this.state = { issues: [] };
@@ -94,7 +94,6 @@ class IssueList extends Component {
     );
   }
 }
-export default IssueList;
 
 IssueList.propTypes = {
   location: React.PropTypes.object.isRequired,

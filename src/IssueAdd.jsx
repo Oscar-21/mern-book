@@ -16,8 +16,7 @@ export default class IssueAdd extends React.PureComponent {
       created: new Date(),
     });
     // clear the form for the next input
-    form.owner.value = ''; 
-    form.title.value = '';
+    form.owner.value = ''; form.title.value = '';
   }
 
   render() {

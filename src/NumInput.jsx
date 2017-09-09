@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class NumInput extends Component {
+export default class NumInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: this.format(props.value) };
@@ -42,7 +42,6 @@ class NumInput extends Component {
     );
   }
 }
-export default NumInput;
 
 NumInput.propTypes = {
   value: React.PropTypes.number,
