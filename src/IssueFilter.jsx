@@ -68,7 +68,6 @@ constructor(props) {
   }
 
   render() {
-    console.log('filter');
     return (
       <div>
         Status:
@@ -85,7 +84,6 @@ constructor(props) {
         <input size={5} value={this.state.effort_gte} onChange={this.onChangeEffortGte} />
         &nbsp;-&nbsp;
         <input size={5} value={this.state.effort_lte} onChange={this.onChangeEffortLte} />
-        <button onClick={this.applyFilter}>Apply</button>
         <button onClick={this.resetFilter} disabled={!this.state.changed}>Reset</button>
         <button onClick={this.clearFilter}>Clear</button>
       </div>

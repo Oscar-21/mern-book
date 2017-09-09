@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import NumInput from './NumInput.jsx';
 
 class IssueEdit extends Component {
   constructor() {
@@ -10,9 +11,9 @@ class IssueEdit extends Component {
         title: '',
         status: '',
         owner: '',
-        effort: '',
         completionDate: '',
         created: '',
+        effort: null,
       },
     };
     this.onChange.bind(this);
@@ -22,15 +23,20 @@ class IssueEdit extends Component {
     this.loadData();
   }
 
-   componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.params.id !== this.props.params.id) {
       this.loadData();
     }
   }
 
-  onChange(e) {
+  checkState() {
+    console.log(this.state.effort)
+  }
+
+  onChange(e, convertedValue) {
     const issue = Object.assign({}, this.state.issue);
-    issue[event.target.name] = event.target.value;
+    const value = (convertedValue !== undefined) ? convertedValue : event.target.value;
+    issue[event.target.name] = value;
     this.setState({ issue });
   }
 
@@ -39,8 +45,11 @@ class IssueEdit extends Component {
       if (response.ok) {
         response.json().then(issue => {
           issue.created = new Date(issue.created).toDateString();
-          issue.completionDate = issue.completionDate != null ? new Date(issue.completionDate).toDateString() : '';
-          issue.effort = issue.effort != null ? issue.effort.toString() : '';
+
+          issue.completionDate = issue.completionDate != null 
+            ? new Date(issue.completionDate).toDateString()
+            : '';
+
           this.setState({ issue });
         });
       } else {
@@ -58,11 +67,12 @@ class IssueEdit extends Component {
     return (
       <div>
         <form>
-          ID: {issue._id} 
+          ID: {issue._id}
           <br />
-          Created: {issue.created} 
+          Created: {issue.created}
           <br />
-          Status: <select name="status" value={issue.status} onChange={this.onChange}>
+          Status: 
+          <select name="status" value={issue.status} onChange={this.onChange}>
             <option value="New">New</option>
             <option value="Open">Open</option>
             <option value="Assigned">Assigned</option>
@@ -71,20 +81,49 @@ class IssueEdit extends Component {
             <option value="Closed">Closed</option>
           </select>
           <br />
-          Owner: <input name="owner" value={issue.owner} onChange={this.onChange} />
+          Owner: 
+          <input 
+            name="owner" 
+            value={issue.owner} 
+            onChange={this.onChange} 
+          />
           <br />
 
-          Effort: <input name="effort" value={issue.effort} onChange={this.onChange} />
+          Effort: 
+          <NumInput 
+            size={5} 
+            name="effort" 
+            value={issue.effort} 
+            onChange={this.onChange} />
           <br />
 
-          Completion Date: <input name="completionDate" value={issue.completionDate} onChange={this.onChange} />
+          Completion Date:
+
+          <input
+            name="completionDate"
+            value={issue.completionDate}
+            onChange={this.onChange}
+          />
+
           <br />
 
-          Title: <input name="title" value={issue.title} onChange={this.onChange} />
+          Title: 
+          <input 
+            name="title" 
+            value={issue.title} 
+            onChange={this.onChange} 
+          />
+
           <br />
+
           <button type="submit">Submit</button>
+
+
+          <h1 onClick={this.checkState}>Effort</h1>
+
           <Link to="/issues">Back to issue list</Link>
-        </form>  
+
+        </form>
       </div>
     );
   }

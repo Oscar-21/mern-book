@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { Link } from 'react-router';
 
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFilter.jsx';
 
-export default class IssueList extends React.PureComponent {
+class IssueList extends Component {
   constructor() {
     super();
     this.state = { issues: [] };
-    
+
     this.createIssue = this.createIssue.bind(this);
     this.setFilter = this.setFilter.bind(this);
   }
@@ -21,13 +21,18 @@ export default class IssueList extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const oldQuery = prevProps.location.query;
     const newQuery = this.props.location.query;
-    console.log('newprops');
-    if (oldQuery.status === newQuery.status 
+
+    if (oldQuery.status === newQuery.status
         && oldQuery.effort_gte === newQuery.effort_gte
         && oldQuery.effort_lte === newQuery.effort_lte) {
       return;
     }
     this.loadData();
+  }
+
+
+  setFilter(query) {
+    this.props.router.replace({ pathname: this.props.location.pathname, query });
   }
 
   loadData() {
@@ -77,10 +82,6 @@ export default class IssueList extends React.PureComponent {
     });
   }
 
-  setFilter(query) {
-    this.props.router.replace({ pathname: this.props.location.pathname, query });
-  }
-
   render() {
     return (
       <div>
@@ -93,6 +94,7 @@ export default class IssueList extends React.PureComponent {
     );
   }
 }
+export default IssueList;
 
 IssueList.propTypes = {
   location: React.PropTypes.object.isRequired,
@@ -138,6 +140,4 @@ function IssueTable(props) {
 IssueTable.propTypes = {
   issues: React.PropTypes.array.isRequired,
 };
-
-
 
