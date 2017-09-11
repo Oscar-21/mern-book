@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
+
 import NumInput from './NumInput.jsx';
 
-export default class IssueEdit extends React.Component {
+class IssueEdit extends Component {
   constructor() {
     super();
     this.state = {
@@ -11,12 +12,12 @@ export default class IssueEdit extends React.Component {
         title: '',
         status: '',
         owner: '',
+        effort: null,
         completionDate: '',
         created: '',
-        effort: null,
       },
     };
-    this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -29,11 +30,9 @@ export default class IssueEdit extends React.Component {
     }
   }
 
-  checkState() {
-    console.log(this.state.effort)
-  }
-
-  onChange(e, convertedValue) {
+  onChange(event, convertedValue) {
+    console.log('converted', convertedValue);
+    console.log(' typeof converted', typeof convertedValue);
     const issue = Object.assign({}, this.state.issue);
     const value = (convertedValue !== undefined) ? convertedValue : event.target.value;
     issue[event.target.name] = value;
@@ -45,11 +44,8 @@ export default class IssueEdit extends React.Component {
       if (response.ok) {
         response.json().then(issue => {
           issue.created = new Date(issue.created).toDateString();
-
-          issue.completionDate = issue.completionDate != null 
-            ? new Date(issue.completionDate).toDateString()
-            : '';
-
+          issue.completionDate = issue.completionDate != null ?
+            new Date(issue.completionDate).toDateString() : '';
           this.setState({ issue });
         });
       } else {
@@ -64,6 +60,8 @@ export default class IssueEdit extends React.Component {
 
   render() {
     const issue = this.state.issue;
+    console.log(`effort ${issue.effort}`);
+    console.log(`typeof ${typeof issue.effort}`);
     return (
       <div>
         <form>
@@ -80,7 +78,9 @@ export default class IssueEdit extends React.Component {
             <option value="Verified">Verified</option>
             <option value="Closed">Closed</option>
           </select>
+
           <br />
+
           Owner: 
           <input 
             name="owner" 
@@ -94,42 +94,40 @@ export default class IssueEdit extends React.Component {
             size={5} 
             name="effort" 
             value={issue.effort} 
-            onChange={this.onChange} />
+            onChange={this.onChange} 
+          />
           <br />
 
-          Completion Date:
-
+          Completion Date: 
           <input
-            name="completionDate"
-            value={issue.completionDate}
+            name="completionDate" 
+            value={issue.completionDate} 
             onChange={this.onChange}
           />
-
           <br />
 
           Title: 
           <input 
             name="title" 
+            size={50} 
             value={issue.title} 
             onChange={this.onChange} 
           />
-
           <br />
 
           <button type="submit">Submit</button>
 
 
-          <h1 onClick={this.checkState}>Effort</h1>
-
           <Link to="/issues">Back to issue list</Link>
 
         </form>
+
       </div>
     );
   }
 }
+export default IssueEdit;
 
 IssueEdit.propTypes = {
   params: React.PropTypes.object.isRequired,
 };
-
