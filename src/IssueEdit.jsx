@@ -2,22 +2,26 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import NumInput from './NumInput.jsx';
+import DateInput from './DateInput.jsx';
 
 class IssueEdit extends Component {
   constructor() {
     super();
     this.state = {
       issue: {
-        _id: '',
-        title: '',
-        status: '',
-        owner: '',
+        _id: '', 
+        title: '', 
+        status: '', 
+        owner: '', 
         effort: null,
-        completionDate: '',
+        completionDate: null, 
         created: '',
       },
+      invalidFields: {},
     };
+
     this.onChange = this.onChange.bind(this);
+    this.onValidityChange = this.onValidityChange.bind(this);
   }
 
   componentDidMount() {
@@ -31,37 +35,51 @@ class IssueEdit extends Component {
   }
 
   onChange(event, convertedValue) {
-    console.log('converted', convertedValue);
-    console.log(' typeof converted', typeof convertedValue);
     const issue = Object.assign({}, this.state.issue);
     const value = (convertedValue !== undefined) ? convertedValue : event.target.value;
     issue[event.target.name] = value;
     this.setState({ issue });
   }
 
+  onValidityChange(event, valid) {
+    const invalidFields = Object.assign({}, this.state.invalidFields);
+    if (!valid) {
+      invalidFields[event.target.name] = true;
+    } else {
+      delete invalidFields[event.target.name];
+    }
+    this.setState({ invalidFields });
+  }
+
   loadData() {
-    fetch(`/api/issues/${this.props.params.id}`).then(response => {
+    fetch(`/api/issues/${this.props.params.id}`)
+    .then(response => {
       if (response.ok) {
-        response.json().then(issue => {
+        response.json()
+        .then(issue => {
           issue.created = new Date(issue.created).toDateString();
-          issue.completionDate = issue.completionDate != null ?
-            new Date(issue.completionDate).toDateString() : '';
+          issue.completionDate = issue.completionDate != null 
+            ? new Date(issue.completionDate) 
+            : null;
           this.setState({ issue });
         });
       } else {
-        response.json().then(error => {
+        response.json()
+        .then(error => {
           alert(`Failed to fetch issue: ${error.message}`);
         });
       }
-    }).catch(err => {
+    })
+    .catch(err => {
       alert(`Error in fetching data from server: ${err.message}`);
     });
   }
 
   render() {
     const issue = this.state.issue;
-    console.log(`effort ${issue.effort}`);
-    console.log(`typeof ${typeof issue.effort}`);
+    const validationMessage = Object.keys(this.state.invalidFields).length === 0 
+      ? null
+      : (<div className="error">Please correct invalid fields before submitting.</div>);
     return (
       <div>
         <form>
@@ -69,8 +87,7 @@ class IssueEdit extends Component {
           <br />
           Created: {issue.created}
           <br />
-          Status: 
-          <select name="status" value={issue.status} onChange={this.onChange}>
+          Status: <select name="status" value={issue.status} onChange={this.onChange}>
             <option value="New">New</option>
             <option value="Open">Open</option>
             <option value="Assigned">Assigned</option>
@@ -78,9 +95,7 @@ class IssueEdit extends Component {
             <option value="Verified">Verified</option>
             <option value="Closed">Closed</option>
           </select>
-
           <br />
-
           Owner: 
           <input 
             name="owner" 
@@ -99,10 +114,11 @@ class IssueEdit extends Component {
           <br />
 
           Completion Date: 
-          <input
+          <DateInput
             name="completionDate" 
             value={issue.completionDate} 
             onChange={this.onChange}
+            onValidityChange={this.onValidityChange}
           />
           <br />
 
@@ -114,14 +130,10 @@ class IssueEdit extends Component {
             onChange={this.onChange} 
           />
           <br />
-
+          {validationMessage}
           <button type="submit">Submit</button>
-
-
           <Link to="/issues">Back to issue list</Link>
-
         </form>
-
       </div>
     );
   }
@@ -131,3 +143,4 @@ export default IssueEdit;
 IssueEdit.propTypes = {
   params: React.PropTypes.object.isRequired,
 };
+
