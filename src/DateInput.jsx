@@ -15,6 +15,7 @@ class DateInput extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log('new props');
     if (newProps.value !== this.props.value) {
       this.setState({ value: this.editFormat(newProps.value) });
     }

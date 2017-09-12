@@ -34,7 +34,8 @@ class NumInput extends Component {
   render() {
     return (
       <input
-        type="text" {...this.props} 
+        type="text" 
+        {...this.props} 
         value={this.state.value}
         onBlur={this.onBlur} 
         onChange={this.onChange}
