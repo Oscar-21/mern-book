@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
-class IssueFilter extends PureComponent {
+class IssueFilter extends Component {
 
 constructor(props) {
     super(props);

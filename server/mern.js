@@ -8,7 +8,7 @@ import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 import Issue from './issue.js';
 
-// Wev
+// Hot Module Replacement
 const webpack = process.env.NODE_ENV !== 'production' ? require('webpack') : null;
 const webpackDevMiddleware = webpack !== null ? require('webpack-dev-middleware') : null;
 const webpackHotMiddleware = webpack !== null ? require('webpack-hot-middleware') : null;
@@ -145,6 +145,30 @@ app.put('/api/issues/:id', (req, res) => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
+});
+
+
+// Delete Issue
+app.delete('/api/issues/:id', (req, res) => {
+  let issueId;
+
+  try {
+    issueId = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(422).json({ message: `Invalid issue ID format: ${error}` });
+    return;
+  }
+
+  db.collection('issues').deleteOne({ _id: issueId })
+  .then((deleteResult) => {
+    if (deleteResult.result.n === 1 ) res.json({ status: 'OK' });
+    res.json({ status: 'Warning object not found' });
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+
 });
 
 

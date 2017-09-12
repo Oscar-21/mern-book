@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default class IssueAdd extends React.PureComponent {
+class IssueAdd extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +31,7 @@ export default class IssueAdd extends React.PureComponent {
     );
   }
 }
+export default IssueAdd;
 
 IssueAdd.propTypes = {
   createIssue: React.PropTypes.func.isRequired,
