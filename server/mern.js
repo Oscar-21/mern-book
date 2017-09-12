@@ -162,7 +162,7 @@ app.delete('/api/issues/:id', (req, res) => {
   db.collection('issues').deleteOne({ _id: issueId })
   .then((deleteResult) => {
     if (deleteResult.result.n === 1 ) res.json({ status: 'OK' });
-    res.json({ status: 'Warning object not found' });
+    else res.json({ status: 'Warning object not found' });
   })
   .catch(error => {
     console.log(error);

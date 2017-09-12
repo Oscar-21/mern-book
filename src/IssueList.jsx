@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { Link } from 'react-router';
 
 import IssueAdd from './IssueAdd.jsx';
 import IssueFilter from './IssueFilter.jsx';
 
-export default class IssueList extends React.Component {
+class IssueList extends Component {
   constructor() {
     super();
     this.state = { issues: [] };
@@ -105,13 +105,14 @@ export default class IssueList extends React.Component {
     );
   }
 }
+export default IssueList;
 
 IssueList.propTypes = {
   location: React.PropTypes.object.isRequired,
   router: React.PropTypes.object.isRequired,
 };
 
-const IssueRow = (props) =>
+const IssueRow = (props) => 
   <tr>
     <td><Link to={`/issues/${props.issue._id}`}>{props.issue._id.substr(-4)}</Link></td>
     <td>{props.issue.status}</td>
@@ -121,9 +122,7 @@ const IssueRow = (props) =>
     <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
     <td>{props.issue.title}</td>
     <td>
-      <button
-        onClick={() => { props.deleteIssue(props.issue._id); }}
-      >
+      <button onClick={() => { props.deleteIssue(props.issue._id) }}>
         Delete
       </button>
     </td>
